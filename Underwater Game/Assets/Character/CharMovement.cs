@@ -53,7 +53,7 @@ public class CharMovement : MonoBehaviour
             transform.position += move * Time.deltaTime * speed;
         }
 
-        if (Input.GetKey(KeyCode.Return) && door)
+        if (Input.GetKeyDown(KeyCode.Return) && door)
         {
             StartCoroutine(ChangeScene());
         }
@@ -61,10 +61,24 @@ public class CharMovement : MonoBehaviour
 
     IEnumerator ChangeScene()
     {
-        SceneManager.LoadScene("Home");
+        Scene currentScene = SceneManager.GetActiveScene();
+        string nextScene = null;
+        if (currentScene.name == "Main")
+            nextScene = "Home";
+        if (currentScene.name == "Home")
+            nextScene = "Main";
 
-        SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneAt(1));
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
 
-        yield return null;
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName(nextScene));
+
+        SceneManager.UnloadSceneAsync(currentScene);
+
+        door = false;
     }
 }
