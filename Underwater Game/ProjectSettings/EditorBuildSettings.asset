@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Home.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: dd24f2ede675f4b70a243d0d55d6a9d1
+  - enabled: 1
+    path: Assets/Scenes/Water.unity
+    guid: 348a0a6311ce54bc591dd3e8ae9fd557
   m_configObjects: {}
