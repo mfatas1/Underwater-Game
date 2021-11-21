@@ -41,10 +41,13 @@ public class CharMovement : MonoBehaviour
 
     void Update()
     {
+        print(door);
+
         if (SceneManager.GetActiveScene().name == "Water")
             waterMovement();
         else
             normalMovement();
+
         if (Input.GetKeyDown(KeyCode.Space) && (door || dock))
             StartCoroutine(ChangeScene());
     }
@@ -140,6 +143,8 @@ public class CharMovement : MonoBehaviour
                 body.gravityScale = 1;
             }
         }
+
+        print("hello");
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
 
