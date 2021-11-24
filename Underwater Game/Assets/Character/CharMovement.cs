@@ -13,9 +13,9 @@ public class CharMovement : MonoBehaviour
     public float waterSpeed;
     public float waterDeceleration;
 
-    private bool door;
-    private bool dock;
-    private bool isGrounded;
+    public bool door;
+    private bool door2;
+    public bool dock;
 
     private Vector3 move;
     private Vector2 waterAcceleration;
@@ -30,46 +30,53 @@ public class CharMovement : MonoBehaviour
     {
         if (info.gameObject.name == "Door")
             door = true;
+
+        if (info.gameObject.name == "Door2")
+            door2 = true;
+
         if (info.gameObject.name == "Dock")
             dock = true;
-
     }
 
     void OnTriggerExit2D(Collider2D info)
     {
         if (info.gameObject.name == "Door")
             door = false;
+
         if (info.gameObject.name == "Dock")
             dock = false;
-    }
 
-    void OnCollisionEnter2D(Collision2D info)
-    {
-        if (info.gameObject.name == "Floor")
-            isGrounded = true;
-    }
-
-    void OnCollisionExit2D(Collision2D info)
-    {
-        if (info.gameObject.name == "Floor")
-            isGrounded = false;
+        if (info.gameObject.name == "Door2")
+            door2 = false;
     }
 
     void Update()
     {
+
         if (SceneManager.GetActiveScene().name == "Water")
             waterMovement();
         else
             normalMovement();
 
-        if (Input.GetKeyDown(KeyCode.Space) && (door || dock))
-            StartCoroutine(ChangeScene());
+        if (dock)
+        {
+          StartCoroutine(ChangeScene());
+          dock = false;
+        }
+        if((door || door2) && Input.GetKeyDown(KeyCode.Space))
+        {
+          StartCoroutine(ChangeScene());
+          if(door2)
+              transform.position = new Vector3(-8.464f, 0.4131f, 0f); print("hello");
+          door = false; 
+          door2 = false;
+        }
     }
 
     // Movement of the character when it's not in the water
     public void normalMovement()
     {
-        if (Input.GetKey(KeyCode.W) && isGrounded)
+        if (Input.GetKey(KeyCode.W))
         {
             body.velocity = new Vector2(0, jumpSpeed);
         }
@@ -137,12 +144,11 @@ public class CharMovement : MonoBehaviour
         string nextScene = null;
 
         if (door)
-        {
-            if (currentScene.name == "Main")
-                nextScene = "Home";
-            if (currentScene.name == "Home")
-                nextScene = "Main";
-        }
+            nextScene = "Home";
+
+        if(door2)
+            nextScene = "Main";
+
         if (dock)
         {
             if (currentScene.name == "Main")
@@ -158,7 +164,6 @@ public class CharMovement : MonoBehaviour
             }
         }
 
-        print("hello");
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
 
@@ -174,3 +179,4 @@ public class CharMovement : MonoBehaviour
         dock = false;
     }
 }
+
