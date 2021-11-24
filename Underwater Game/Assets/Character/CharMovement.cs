@@ -13,8 +13,9 @@ public class CharMovement : MonoBehaviour
     public float waterSpeed;
     public float waterDeceleration;
 
-    public bool door;
-    public bool dock;
+    private bool door;
+    private bool dock;
+    private bool isGrounded;
 
     private Vector3 move;
     private Vector2 waterAcceleration;
@@ -31,18 +32,31 @@ public class CharMovement : MonoBehaviour
             door = true;
         if (info.gameObject.name == "Dock")
             dock = true;
+
     }
 
     void OnTriggerExit2D(Collider2D info)
     {
         if (info.gameObject.name == "Door")
             door = false;
+        if (info.gameObject.name == "Dock")
+            dock = false;
+    }
+
+    void OnCollisionEnter2D(Collision2D info)
+    {
+        if (info.gameObject.name == "Floor")
+            isGrounded = true;
+    }
+
+    void OnCollisionExit2D(Collision2D info)
+    {
+        if (info.gameObject.name == "Floor")
+            isGrounded = false;
     }
 
     void Update()
     {
-        print(door);
-
         if (SceneManager.GetActiveScene().name == "Water")
             waterMovement();
         else
@@ -55,7 +69,7 @@ public class CharMovement : MonoBehaviour
     // Movement of the character when it's not in the water
     public void normalMovement()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) && isGrounded)
         {
             body.velocity = new Vector2(0, jumpSpeed);
         }
