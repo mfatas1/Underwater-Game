@@ -282,8 +282,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 180721247}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.58, y: 3.0517, z: 0}
-  m_LocalScale: {x: 1, y: 13.970682, z: 1}
+  m_LocalPosition: {x: -14.5238, y: 4.0345, z: 0}
+  m_LocalScale: {x: 1.1123, y: 12.005008, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -399,7 +399,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: b68d844706cc04c7fa2cbe20e8d81a51, type: 3}
-  m_Color: {r: 0.3679245, g: 0.19123913, b: 0.019090425, a: 1}
+  m_Color: {r: 0.27450982, g: 0.14901961, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -417,7 +417,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 318114319}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.28, y: -0.16, z: 0}
+  m_LocalPosition: {x: -8.28, y: 0.51, z: 0}
   m_LocalScale: {x: 2, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 968138582}
   - component: {fileID: 968138584}
   m_Layer: 0
-  m_Name: HomeFloor
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -500,7 +500,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 968138581}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1869, y: -3.3, z: 0}
+  m_LocalPosition: {x: 0.1869, y: -2.547, z: 0}
   m_LocalScale: {x: 30.494999, y: 1.2629268, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -718,8 +718,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790685852}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15, y: 3.05, z: 0}
-  m_LocalScale: {x: 1, y: 13.967396, z: 1}
+  m_LocalPosition: {x: 14.9438, y: 4.0048, z: 0}
+  m_LocalScale: {x: 1.1123, y: 12.057871, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5

@@ -15,7 +15,9 @@ public class CharMovement : MonoBehaviour
 
     public bool door;
     private bool door2;
-    public bool dock;
+    private bool dock;
+    private bool dock2;
+    private bool isGrounded;
 
     private Vector3 move;
     private Vector2 waterAcceleration;
@@ -23,9 +25,10 @@ public class CharMovement : MonoBehaviour
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        StartCoroutine(ChangeScene("Main"));
     }
 
-    // Collisions
+    //Trigger Collisions (this is for the transitional stuff/changing scenes)
     void OnTriggerEnter2D(Collider2D info)
     {
         if (info.gameObject.name == "Door")
@@ -34,8 +37,12 @@ public class CharMovement : MonoBehaviour
         if (info.gameObject.name == "Door2")
             door2 = true;
 
+
         if (info.gameObject.name == "Dock")
             dock = true;
+
+        if (info.gameObject.name == "Dock2")
+            dock2 = true;
     }
 
     void OnTriggerExit2D(Collider2D info)
@@ -43,11 +50,28 @@ public class CharMovement : MonoBehaviour
         if (info.gameObject.name == "Door")
             door = false;
 
+        if (info.gameObject.name == "Door2")
+            door2 = false;
+
+
         if (info.gameObject.name == "Dock")
             dock = false;
 
-        if (info.gameObject.name == "Door2")
-            door2 = false;
+        if (info.gameObject.name == "Dock2")
+            dock2 = false;
+    }
+
+    //Regular Collisions (mostly just floors to check when the object is grounded)
+    void OnCollisionEnter2D(Collision2D info)
+    {
+        if (info.gameObject.name == "Floor")
+            isGrounded = true;
+    }
+
+    void OnCollisionExit2D(Collision2D info)
+    {
+        if (info.gameObject.name == "Floor")
+            isGrounded = false;
     }
 
     void Update()
@@ -60,23 +84,35 @@ public class CharMovement : MonoBehaviour
 
         if (dock)
         {
-          StartCoroutine(ChangeScene());
+          StartCoroutine(ChangeScene("Water"));
           dock = false;
         }
-        if((door || door2) && Input.GetKeyDown(KeyCode.Space))
+
+        if (dock2)
         {
-          StartCoroutine(ChangeScene());
-          if(door2)
-              transform.position = new Vector3(-8.464f, 0.4131f, 0f); print("hello");
+            StartCoroutine(ChangeScene("Main"));
+            dock2 = false;
+        }
+
+        if (door && Input.GetKeyDown(KeyCode.Space))
+        {
+          StartCoroutine(ChangeScene("Home"));
           door = false; 
-          door2 = false;
+        }
+
+        if (door2 && Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(ChangeScene("Main"));
+            door2 = false;
         }
     }
 
     // Movement of the character when it's not in the water
     public void normalMovement()
     {
-        if (Input.GetKey(KeyCode.W))
+        body.gravityScale = 1;
+
+        if (Input.GetKey(KeyCode.W) && isGrounded)
         {
             body.velocity = new Vector2(0, jumpSpeed);
         }
@@ -99,6 +135,7 @@ public class CharMovement : MonoBehaviour
     {
         body.velocity = new Vector2(body.velocity.x + waterAcceleration.x * Time.deltaTime,
                                     body.velocity.y + waterAcceleration.y * Time.deltaTime);
+        body.gravityScale = 0;
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -138,45 +175,18 @@ public class CharMovement : MonoBehaviour
     }
 
     // Method to change scenes
-    IEnumerator ChangeScene()
+    IEnumerator ChangeScene(string nextScene)
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        string nextScene = null;
-
-        if (door)
-            nextScene = "Home";
-
-        if(door2)
-            nextScene = "Main";
-
-        if (dock)
-        {
-            if (currentScene.name == "Main")
-            {
-                nextScene = "Water";
-                body.gravityScale = 0;
-                body.velocity = new Vector3(0, 0, 0);
-            }
-            if (currentScene.name == "Water")
-            {
-                nextScene = "Main";
-                body.gravityScale = 1;
-            }
-        }
-
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
 
         while (!asyncLoad.isDone)
             yield return null;
 
-        if(currentScene.name == "Main")
-            SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName(nextScene));
+        SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName(nextScene));
 
         SceneManager.UnloadSceneAsync(currentScene);
-
-        door = false;
-        dock = false;
     }
 }
 
