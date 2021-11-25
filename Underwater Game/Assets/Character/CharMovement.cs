@@ -84,20 +84,23 @@ public class CharMovement : MonoBehaviour
 
         if (dock)
         {
-          StartCoroutine(ChangeScene("Water"));
-          dock = false;
+            StartCoroutine(ChangeScene("Water"));
+            body.gravityScale = 0;
+            body.velocity = new Vector2(0f, 0f);
+            dock = false;
         }
 
         if (dock2)
         {
             StartCoroutine(ChangeScene("Main"));
+            body.gravityScale = 1;
             dock2 = false;
         }
 
         if (door && Input.GetKeyDown(KeyCode.Space))
         {
-          StartCoroutine(ChangeScene("Home"));
-          door = false; 
+            StartCoroutine(ChangeScene("Home"));
+            door = false; 
         }
 
         if (door2 && Input.GetKeyDown(KeyCode.Space))
@@ -110,7 +113,6 @@ public class CharMovement : MonoBehaviour
     // Movement of the character when it's not in the water
     public void normalMovement()
     {
-        body.gravityScale = 1;
 
         if (Input.GetKey(KeyCode.W) && isGrounded)
         {
@@ -135,7 +137,6 @@ public class CharMovement : MonoBehaviour
     {
         body.velocity = new Vector2(body.velocity.x + waterAcceleration.x * Time.deltaTime,
                                     body.velocity.y + waterAcceleration.y * Time.deltaTime);
-        body.gravityScale = 0;
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -161,13 +162,13 @@ public class CharMovement : MonoBehaviour
             waterAcceleration = new Vector2(waterAcceleration.x, waterDeceleration);
         }
 
-        if (body.velocity.y >= -0.1 && body.velocity.y <= 0.1)
+        if (body.velocity.y >= -0.05 && body.velocity.y <= 0.05)
         {
             waterAcceleration = new Vector2(waterAcceleration.x, 0);
             body.velocity = new Vector2(body.velocity.x, 0);
         }
 
-        if (body.velocity.x >= -0.1 && body.velocity.x <= 0.1)
+        if (body.velocity.x >= -0.05 && body.velocity.x <= 0.05)
         {
             waterAcceleration = new Vector2(0, waterAcceleration.y);
             body.velocity = new Vector2(0, body.velocity.y);
