@@ -2286,6 +2286,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character
       objectReference: {fileID: 0}
+    - target: {fileID: 3839061378768044059, guid: d2acffbece5a7447f96e93ad49393daa, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3839061378768044059, guid: d2acffbece5a7447f96e93ad49393daa, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.7686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 3839061378768044059, guid: d2acffbece5a7447f96e93ad49393daa, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.7686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 3839061378768044059, guid: d2acffbece5a7447f96e93ad49393daa, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.7686275
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2acffbece5a7447f96e93ad49393daa, type: 3}
 --- !u!1001 &8566515960998678025
